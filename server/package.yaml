@@ -21,7 +21,7 @@ library:
     - Moba.Server.Internal
 
 executables:
-  client:
+  server:
     main: Main.hs
     ghc-options: -threaded
     dependencies:

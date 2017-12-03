@@ -2,13 +2,14 @@ name: client
 version: '0.1'
 
 dependencies:
+  - aeson
   - base
   - bytestring
-  - aeson
-  - network
-  - websockets
-  - text
   - interpolatedstring-perl6
+  - lib ==1
+  - network
+  - text
+  - websockets
 
 default-extensions:
   - OverloadedStrings
@@ -18,7 +19,6 @@ library:
   source-dirs: src
   exposed-modules:
     - Moba.Client
-    - Moba.Client.Internal
 
 executables:
   client:

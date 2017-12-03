@@ -17,7 +17,7 @@ import qualified Data.Text.IO                  as T
 import qualified Data.Text.Lazy                as TL
 import qualified Data.Text.Lazy.Encoding       as TL
 import           Moba.Client                   (fight)
-import           Moba.Client.Internal
+import           Moba.Internal
 import           Network.Socket                (withSocketsDo)
 import           Network.WebSockets
 import           Network.WebSockets            (WebSocketsData (..))

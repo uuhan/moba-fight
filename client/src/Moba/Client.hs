@@ -11,7 +11,7 @@ import           Data.Aeson
 import           Data.ByteString.Lazy (ByteString)
 import           Data.List            (find, sortBy)
 import           Data.Maybe
-import           Moba.Client.Internal
+import           Moba.Internal
 
 -- | 加权指令
 type Q = (Float, ToServer)
