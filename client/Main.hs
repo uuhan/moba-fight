@@ -4,8 +4,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 module Main (main) where
 
-import           Client.Moba                   (fight)
-import           Client.Moba.Internal
 import           Control.Concurrent            (forkIO, killThread)
 import           Control.Monad
 import           Control.Monad.IO.Class        (liftIO)
@@ -18,6 +16,8 @@ import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as T
 import qualified Data.Text.Lazy                as TL
 import qualified Data.Text.Lazy.Encoding       as TL
+import           Moba.Client                   (fight)
+import           Moba.Client.Internal
 import           Network.Socket                (withSocketsDo)
 import           Network.WebSockets
 import           Network.WebSockets            (WebSocketsData (..))

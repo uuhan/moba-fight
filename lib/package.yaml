@@ -1,0 +1,15 @@
+name: 'moba-lib'
+version: '1'
+
+dependencies:
+  - base
+  - bytestring
+  - aeson
+  - text
+
+library:
+  source-dirs: .
+  exposed-modules:
+    - Moba.Internal
+  other-modules:
+    - Moba.Internal.Hero

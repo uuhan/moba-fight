@@ -17,8 +17,8 @@ default-extensions:
 library:
   source-dirs: src
   exposed-modules:
-    - Server.Moba
-    - Server.Moba.Internal
+    - Moba.Server
+    - Moba.Server.Internal
 
 executables:
   client:

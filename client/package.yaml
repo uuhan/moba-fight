@@ -17,10 +17,8 @@ default-extensions:
 library:
   source-dirs: src
   exposed-modules:
-    - Client.Moba
-    - Client.Moba.Internal
-    - Client.Moba.Backends
-    - Client.Moba.Backends.TensorFlow
+    - Moba.Client
+    - Moba.Client.Internal
 
 executables:
   client:

@@ -2,7 +2,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedLabels      #-}
 {-# LANGUAGE RecordWildCards       #-}
-module Client.Moba
+module Moba.Client
   ( -- * Fight!
     fight
   ) where
@@ -11,7 +11,7 @@ import           Data.Aeson
 import           Data.ByteString.Lazy (ByteString)
 import           Data.List            (find, sortBy)
 import           Data.Maybe
-import           Client.Moba.Internal
+import           Moba.Client.Internal
 
 -- | 加权指令
 type Q = (Float, ToServer)

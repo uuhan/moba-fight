@@ -4,7 +4,7 @@
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TemplateHaskell       #-}
-module Client.Moba.Internal where
+module Moba.Client.Internal where
 
 import           Data.Aeson
 import           Data.Aeson.TH
