@@ -13,3 +13,17 @@ library:
     - Moba.Internal
   other-modules:
     - Moba.Internal.Hero
+
+tests:
+  lib-tests:
+    main: Test.hs
+    source-dirs:
+      - .
+    ghc-options: -Wall
+    dependencies:
+      - lib
+      - HUnit
+      - QuickCheck
+      - test-framework
+      - test-framework-hunit
+      - interpolatedstring-perl6

@@ -1,17 +1,17 @@
 {-# OPTIONS_GHC -Wno-all #-}
 {-# LANGUAGE QuasiQuotes #-}
-module Client.Moba.Internal.Tests
+module Moba.InternalTest
   ( tests
   ) where
 
 import           Control.Monad                  (forM_)
 import           Data.Aeson
 import qualified Data.ByteString.Lazy.Char8     as BL
+import           Moba.Internal
 import           Test.Framework                 (Test, testGroup)
 import           Test.Framework.Providers.HUnit (testCase)
 import           Test.HUnit                     (Assertion, assert)
 import           Text.InterpolatedString.Perl6  (q)
-import           Client.Moba.Internal
 
 tests :: Test
 tests = testGroup "Client.Moba.Internal.Tests"

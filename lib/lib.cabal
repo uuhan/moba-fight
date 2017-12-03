@@ -20,3 +20,26 @@ library
   other-modules:
       Moba.Internal.Hero
   default-language: Haskell2010
+
+test-suite lib-tests
+  type: exitcode-stdio-1.0
+  main-is: Test.hs
+  hs-source-dirs:
+      ./.
+  ghc-options: -Wall
+  build-depends:
+      base
+    , bytestring
+    , aeson
+    , text
+    , lib
+    , HUnit
+    , QuickCheck
+    , test-framework
+    , test-framework-hunit
+    , interpolatedstring-perl6
+  other-modules:
+      Moba.Internal
+      Moba.Internal.Hero
+      Moba.InternalTest
+  default-language: Haskell2010
