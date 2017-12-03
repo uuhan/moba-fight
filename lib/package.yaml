@@ -12,6 +12,7 @@ library:
   exposed-modules:
     - Moba.Internal
   other-modules:
+    - Moba.Internal.Types
     - Moba.Internal.Hero
 
 tests:

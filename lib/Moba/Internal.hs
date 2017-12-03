@@ -8,24 +8,14 @@ module Moba.Internal where
 
 import           Data.Aeson
 import           Data.Aeson.TH
-import           Data.Char     (toLower)
+import           Data.Char           (toLower)
 import           Data.Monoid
+import           Moba.Internal.Types
 
 -- | 服务器错误码
 #define S_PARSE_ERROR "指令解析错误"
 #define S_OP_LIMITED  "超过每秒发送限制"
 #define S_NO_SUCH_OP  "指令不存在"
-
--- | 英雄编号， 蓝方为: 0-4, 红方为: 5-9
-type HeroId = Int
--- | 攻击目标
-type TargetId = Int
--- | Token
-type Token = String
--- | 错误命令
-type CmdString = String
--- | 房间号
-type GameId = String
 
 -- | Status 游戏状态
 data Status = GamePending | GamePicking | GameLoading | GameStart | GameEnd deriving (Show)
