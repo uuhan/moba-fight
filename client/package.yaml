@@ -1,0 +1,49 @@
+name: client
+version: '0.1'
+
+dependencies:
+  - base
+  - bytestring
+  - aeson
+  - network
+  - websockets
+  - text
+  - interpolatedstring-perl6
+
+default-extensions:
+  - OverloadedStrings
+  - ScopedTypeVariables
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Client.Moba
+    - Client.Moba.Internal
+    - Client.Moba.Backends
+    - Client.Moba.Backends.Manual
+    - Client.Moba.Backends.TensorFlow
+
+executables:
+  client:
+    main: Main.hs
+    ghc-options: -threaded
+    dependencies:
+      - client
+      - fast-logger
+      - haskeline
+      - optparse-applicative
+
+tests:
+  client-tests:
+    main: TestSuite.hs
+    source-dirs:
+      - src
+      - tests/src
+    ghc-options: -Wall
+    dependencies:
+      - HUnit
+      - QuickCheck
+      - test-framework
+      - test-framework-hunit
+      - test-framework-quickcheck2
+      - interpolatedstring-perl6

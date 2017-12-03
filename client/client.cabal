@@ -1,0 +1,82 @@
+-- This file has been generated from package.yaml by hpack version 0.17.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           client
+version:        0.1
+build-type:     Simple
+cabal-version:  >= 1.10
+
+library
+  hs-source-dirs:
+      src
+  default-extensions: OverloadedStrings ScopedTypeVariables
+  build-depends:
+      base
+    , bytestring
+    , aeson
+    , network
+    , websockets
+    , text
+    , interpolatedstring-perl6
+  exposed-modules:
+      Client.Moba
+      Client.Moba.Internal
+      Client.Moba.Backends
+      Client.Moba.Backends.Manual
+      Client.Moba.Backends.TensorFlow
+  other-modules:
+      Paths_client
+  default-language: Haskell2010
+
+executable client
+  main-is: Main.hs
+  default-extensions: OverloadedStrings ScopedTypeVariables
+  ghc-options: -threaded
+  build-depends:
+      base
+    , bytestring
+    , aeson
+    , network
+    , websockets
+    , text
+    , interpolatedstring-perl6
+    , client
+    , fast-logger
+    , haskeline
+    , optparse-applicative
+  default-language: Haskell2010
+
+test-suite client-tests
+  type: exitcode-stdio-1.0
+  main-is: TestSuite.hs
+  hs-source-dirs:
+      src
+      tests/src
+  default-extensions: OverloadedStrings ScopedTypeVariables
+  ghc-options: -Wall
+  build-depends:
+      base
+    , bytestring
+    , aeson
+    , network
+    , websockets
+    , text
+    , interpolatedstring-perl6
+    , HUnit
+    , QuickCheck
+    , test-framework
+    , test-framework-hunit
+    , test-framework-quickcheck2
+    , interpolatedstring-perl6
+  other-modules:
+      Client.Moba
+      Client.Moba.Backends
+      Client.Moba.Backends.Manual
+      Client.Moba.Backends.TensorFlow
+      Client.Moba.Internal
+      ZhiKe.Moba.Backends.Manual.Tests
+      ZhiKe.Moba.Backends.TensorFlow.Tests
+      ZhiKe.Moba.Internal.Tests
+      ZhiKe.Moba.Tests
+  default-language: Haskell2010
