@@ -1,6 +1,6 @@
 .stack-work
 moba.cabal
-moba
+server.cabal
 *.log
 *.log.*
 *.swp

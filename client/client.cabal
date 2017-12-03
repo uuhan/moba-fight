@@ -23,7 +23,6 @@ library
       Client.Moba
       Client.Moba.Internal
       Client.Moba.Backends
-      Client.Moba.Backends.Manual
       Client.Moba.Backends.TensorFlow
   other-modules:
       Paths_client
@@ -72,7 +71,6 @@ test-suite client-tests
   other-modules:
       Client.Moba
       Client.Moba.Backends
-      Client.Moba.Backends.Manual
       Client.Moba.Backends.TensorFlow
       Client.Moba.Internal
       ZhiKe.Moba.Backends.Manual.Tests
