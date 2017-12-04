@@ -12,11 +12,6 @@ import           Data.Char           (toLower)
 import           Data.Monoid
 import           Moba.Internal.Types
 
--- | 服务器错误码
-#define S_PARSE_ERROR "指令解析错误"
-#define S_OP_LIMITED  "超过每秒发送限制"
-#define S_NO_SUCH_OP  "指令不存在"
-
 -- | Status 游戏状态
 data Status = GamePending | GamePicking | GameLoading | GameStart | GameEnd deriving (Show)
 
