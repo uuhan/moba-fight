@@ -13,7 +13,6 @@ library:
     - Moba.Internal
   other-modules:
     - Moba.Internal.Types
-    - Moba.Internal.Hero
 
 tests:
   lib-tests:
