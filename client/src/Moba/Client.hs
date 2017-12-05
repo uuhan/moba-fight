@@ -20,13 +20,13 @@ type Nearest = Bool
 fight :: FromServer -> Maybe [ToServer]
 fight (Update c g@(GameState{..})) = do
   let sortedTowers = sortBy sort_tower towers
-      enemy_towers = filter (\(TowerState{..}) -> t_camp /= c) sortedTowers
-      aura_towers = filter (\(TowerState{..}) -> t_aura /= NoAura) towers
-      our_towers   = filter (\(TowerState{..}) -> t_camp == c) sortedTowers
-      enemy_heros  = filter (\(HeroState{..})  -> h_camp /= c) heros
-      our_heros    = filter (\(HeroState{..})  -> h_camp == c) heros
-      enemy_alive_heros = filter (\(HeroState{..})  -> h_camp /= c && h_status /= Dead) heros
-      our_alive_heros   = filter (\(HeroState{..})  -> h_camp == c && h_status /= Dead) heros
+      enemy_towers = filter (\(TowerState{..}) -> tower_camp /= c) sortedTowers
+      aura_towers = filter (\(TowerState{..}) -> tower_aura /= NoAura) towers
+      our_towers   = filter (\(TowerState{..}) -> tower_camp == c) sortedTowers
+      enemy_heros  = filter (\(HeroState{..})  -> hero_camp /= c) heros
+      our_heros    = filter (\(HeroState{..})  -> hero_camp == c) heros
+      enemy_alive_heros = filter (\(HeroState{..})  -> hero_camp /= c && hero_status /= Dead) heros
+      our_alive_heros   = filter (\(HeroState{..})  -> hero_camp == c && hero_status /= Dead) heros
 
   -- 判定条件:
   --  good: 比分是否落后
@@ -118,63 +118,63 @@ checkScores c Camps{..} =
       -> HeroState  -- 敌方英雄
       -> Q
 hero <|> enemy    =
-  let hero_id     = h_id hero
-      enemy_id    = h_id enemy
-      hero_name   = h_name hero
-      enemy_name  = h_name enemy
-      firecd      = h_fireCD hero
+  let h_id     = hero_id hero
+      enemy_id    = hero_id enemy
+      h_name   = hero_name hero
+      enemy_name  = hero_name enemy
+      firecd      = hero_fireCD hero
       distance    = hero <-> enemy
-      not_daz     = h_status enemy /= Dazing
+      not_daz     = hero_status enemy /= Dazing
       dazingW     = if not_daz then 0 else 100
   in
-    case hero_name of
+    case h_name of
       Shooter ->
         -- 和敌方战士保持 150 距离
         if (distance <= 150 && enemy_name == Warrior)
-          then  (600, Move hero_id (goBack hero enemy))
+          then  (600, Move h_id (goBack hero enemy))
           else if firecd == 0 && distance < 470
-                 then (1000, Fire hero_id enemy_id)
-                 else (125 - 100 * (checkHealth enemy) + dazingW, Attack hero_id HeroTarget enemy_id)
+                 then (1000, Fire h_id enemy_id)
+                 else (125 - 100 * (checkHealth enemy) + dazingW, Attack h_id HeroTarget enemy_id)
       Warrior -> if firecd == 0 && distance < 320 && not_daz
-                   then (1000, Fire hero_id enemy_id)
-                   else (125 - 100 * (checkHealth enemy) + dazingW, Attack hero_id HeroTarget enemy_id)
+                   then (1000, Fire h_id enemy_id)
+                   else (125 - 100 * (checkHealth enemy) + dazingW, Attack h_id HeroTarget enemy_id)
 
 -- | 释放技能
 skill :: HeroState  -- 我方英雄
       -> HeroState  -- 敌方英雄
       -> Maybe Q
 hero `skill` enemy    =
-  let hero_id     = h_id hero
-      enemy_id    = h_id enemy
-      hero_name   = h_name hero
-      firecd      = h_fireCD hero
+  let h_id     = hero_id hero
+      enemy_id    = hero_id enemy
+      h_name   = hero_name hero
+      firecd      = hero_fireCD hero
       distance    = hero <-> enemy
-      not_daz     = h_status enemy /= Dazing
+      not_daz     = hero_status enemy /= Dazing
   in
-    case hero_name of
+    case h_name of
       Shooter ->
         if firecd == 0 && distance < 470
-            then Just (1000, Fire hero_id enemy_id)
+            then Just (1000, Fire h_id enemy_id)
             else Nothing
       Warrior ->
         if firecd == 0 && distance < 320 && not_daz
-          then Just (1000, Fire hero_id enemy_id)
+          then Just (1000, Fire h_id enemy_id)
           else Nothing
 
 -- | 塔排序
 sort_tower :: TowerState -> TowerState -> Ordering
-sort_tower t1 t2 = if (t_aura t1 == NoAura && t_aura t2 /= NoAura) then GT else LT
+sort_tower t1 t2 = if (tower_aura t1 == NoAura && tower_aura t2 /= NoAura) then GT else LT
 
 -- | 攻击建筑
 attackTower :: HeroState    -- 行动的英雄
             -> TowerState   -- 攻击的塔
             -> [TowerState] -- 倘若攻击的是己方的塔，那么从敌方塔中挑最近的攻击; 如果保证对象是敌方塔，可以设置为空数组
             -> Q
-attackTower HeroState{..} TowerState{..} [] = (100, Attack h_id TowerTarget t_id)
+attackTower HeroState{..} TowerState{..} [] = (100, Attack hero_id TowerTarget tower_id)
 attackTower hero@(HeroState{..}) tower@(TowerState{..}) en =
-  if h_camp /= t_camp then (100, Attack h_id TowerTarget t_id)
+  if hero_camp /= tower_camp then (100, Attack hero_id TowerTarget tower_id)
                       else case takeNearestTower False hero en of
-                             Nothing -> (0, Attack h_id TowerTarget t_id)
+                             Nothing -> (0, Attack hero_id TowerTarget tower_id)
                              Just t  -> attackTower hero t []
 
 -- | take nearest tower
@@ -190,7 +190,7 @@ takeNearestTower False hero ts =
     -- 对属性塔加权重
     (<..>) :: HeroState -> TowerState -> Float
     hero <..> tower =
-      case (t_aura tower) of
+      case (tower_aura tower) of
         NoAura  -> hero <.> tower + 500
         Magic   -> hero <.> tower
         Speed   -> hero <.> tower + 100
@@ -205,7 +205,7 @@ takeNearestHero hero hs =
 
 -- | 检查英雄健康度
 checkHealth :: HeroState -> Float
-checkHealth HeroState{..} = h_healthPoint / h_initHealthPoint
+checkHealth HeroState{..} = hero_healthPoint / hero_initHealthPoint
 
 -- | 获取周围英雄数
 aroundHero :: HeroState -> [HeroState] -> Int
@@ -214,10 +214,10 @@ aroundHero h = length . filter (\x -> h <-> x <= 150)
 -- | 获取退避点
 goBack :: HeroState -> HeroState -> Position
 goBack hero enemy =
-  let pos_hero_x = x $ h_position hero
-      pos_hero_y = y $ h_position hero
-      pos_enem_x = x $ h_position enemy
-      pos_enem_y = y $ h_position enemy
+  let pos_hero_x = x $ hero_position hero
+      pos_hero_y = y $ hero_position hero
+      pos_enem_x = x $ hero_position enemy
+      pos_enem_y = y $ hero_position enemy
       pos_x = if pos_hero_x - pos_enem_x == 0
                 then pos_hero_x
                 else pos_hero_x + (220 / sqrt 2) * (pos_hero_x - pos_enem_x) / abs (pos_hero_x - pos_enem_x)

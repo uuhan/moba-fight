@@ -49,13 +49,13 @@ instance ToJSON Aura where
 
 -- | 塔状态
 data TowerState = TowerState
-                { t_id              :: TargetId
-                , t_camp            :: Camp
-                , t_position        :: Position
-                , t_goldPerSecond   :: Int
-                , t_aura            :: Aura
-                , t_initHealthPoint :: Float
-                , t_healthPoint     :: Float
+                { tower_id              :: TargetId
+                , tower_camp            :: Camp
+                , tower_position        :: Position
+                , tower_goldPerSecond   :: Int
+                , tower_aura            :: Aura
+                , tower_initHealthPoint :: Float
+                , tower_healthPoint     :: Float
                 }
 deriveJSON defaultOptions { fieldLabelModifier = \(_:_:xs) -> xs } ''TowerState
 
@@ -79,35 +79,35 @@ deriveJSON defaultOptions { constructorTagModifier = \(_:x:xs) -> (toLower x):xs
 
 -- | 英雄数据
 data HeroState = HeroState
-               { h_id                 :: HeroId
-               , h_name               :: HeroType
-               , h_camp               :: Camp
-               , h_moveSpeed          :: Int
-               , h_attackDamageMin    :: Int
-               , h_attackDamageMax    :: Int
-               , h_attackRange        :: Int
-               , h_attackAnimation    :: Int
-               , h_attackGap          :: Int
-               , h_attackMissileSpeed :: Int
-               , h_fireName           :: String
-               , h_fireDamage         :: Int
-               , h_fireDuration       :: Int
-               , h_fireRange          :: Int
-               , h_fireAnimation      :: Int
-               , h_fireGap            :: Int
-               , h_fireMissileSpeed   :: Int
+               { hero_id                 :: HeroId
+               , hero_name               :: HeroType
+               , hero_camp               :: Camp
+               , hero_moveSpeed          :: Int
+               , hero_attackDamageMin    :: Int
+               , hero_attackDamageMax    :: Int
+               , hero_attackRange        :: Int
+               , hero_attackAnimation    :: Int
+               , hero_attackGap          :: Int
+               , hero_attackMissileSpeed :: Int
+               , hero_fireName           :: String
+               , hero_fireDamage         :: Int
+               , hero_fireDuration       :: Int
+               , hero_fireRange          :: Int
+               , hero_fireAnimation      :: Int
+               , hero_fireGap            :: Int
+               , hero_fireMissileSpeed   :: Int
                -- 位置
-               , h_position           :: Position
+               , hero_position           :: Position
                -- 朝向
-               , h_orientation        :: Orientation
+               , hero_orientation        :: Orientation
                -- 状态
-               , h_status             :: HeroStatus
-               , h_attackCD           :: Int
-               , h_fireCD             :: Int
-               , h_dazingRemaining    :: Int
-               , h_rebornRemaining    :: Int
-               , h_healthPoint        :: Float
-               , h_initHealthPoint    :: Float
+               , hero_status             :: HeroStatus
+               , hero_attackCD           :: Int
+               , hero_fireCD             :: Int
+               , hero_dazingRemaining    :: Int
+               , hero_rebornRemaining    :: Int
+               , hero_healthPoint        :: Float
+               , hero_initHealthPoint    :: Float
                }
 deriveJSON defaultOptions { fieldLabelModifier = \(_:_:xs) -> xs } ''HeroState
 
@@ -268,11 +268,11 @@ instance Pos Position where
     p1 <-> p2 = sqrt $ (x p1 - x p2) ** 2 + (y p1 - y p2) ** 2
 
 instance Pos HeroState where
-    h1 <-> h2 = (h_position h1) <-> (h_position h2)
+    h1 <-> h2 = (hero_position h1) <-> (hero_position h2)
 
 instance Pos TowerState where
-    t1 <-> t2 = (t_position t1) <-> (t_position t2)
+    t1 <-> t2 = (tower_position t1) <-> (tower_position t2)
 
 {-# INLINE (<.>) #-}
 (<.>) :: HeroState -> TowerState -> Float
-HeroState{..} <.> TowerState{..} = h_position <-> t_position
+HeroState{..} <.> TowerState{..} = hero_position <-> tower_position
