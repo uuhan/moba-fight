@@ -9,6 +9,9 @@ dependencies:
   - websockets
   - text
   - interpolatedstring-perl6
+  - yesod-core
+  - yesod-static
+  - yesod-websockets
 
 default-extensions:
   - OverloadedStrings
