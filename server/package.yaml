@@ -6,12 +6,13 @@ dependencies:
   - bytestring
   - aeson
   - network
-  - websockets
   - text
   - interpolatedstring-perl6
-  - yesod-core
-  - yesod-static
-  - yesod-websockets
+  - wai
+  - wai-websockets
+  - wai-app-static
+  - websockets
+  - warp
 
 default-extensions:
   - OverloadedStrings
